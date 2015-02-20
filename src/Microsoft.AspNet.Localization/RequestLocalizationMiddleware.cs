@@ -16,7 +16,7 @@ namespace Microsoft.AspNet.Localization
             _next = next;
         }
 
-        public Task Invoke(HttpContext context)
+        public async Task Invoke(HttpContext context)
         {
             if (context.Request.QueryString.HasValue)
             {
@@ -24,18 +24,33 @@ namespace Microsoft.AspNet.Localization
                 if (!string.IsNullOrEmpty(queryCulture))
                 {
                     var culture = new CultureInfo(queryCulture);
+
+                    context.SetFeature<IRequestCultureFeature>(new RequestCultureFeature(culture));
+
+                    var originalCulture = CultureInfo.CurrentCulture;
+                    var originalUICulture = CultureInfo.CurrentUICulture;
+
 #if ASPNETCORE50
-                        CultureInfo.CurrentCulture = culture;
-                        CultureInfo.CurrentUICulture = culture;
+                    CultureInfo.CurrentCulture = culture;
+                    CultureInfo.CurrentUICulture = culture;
 #else
-                    // TODO: This is completely wrong as the threads get re-used!!
                     Thread.CurrentThread.CurrentCulture = culture;
                     Thread.CurrentThread.CurrentUICulture = culture;
 #endif
+
+                    await _next(context);
+
+#if ASPNETCORE50
+                    CultureInfo.CurrentCulture = originalCulture;
+                    CultureInfo.CurrentUICulture = originalUICulture;
+#else
+                    Thread.CurrentThread.CurrentCulture = originalCulture;
+                    Thread.CurrentThread.CurrentUICulture = originalUICulture;
+#endif
+
+                    return;
                 }
             }
-
-            return _next(context);
         }
     }
 }
