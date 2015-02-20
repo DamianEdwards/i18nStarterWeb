@@ -1,0 +1,25 @@
+{
+    "version": "1.0.0-*",
+    "dependencies": {
+        "Microsoft.Framework.Localization": "1.0.0-*",
+        "Microsoft.Framework.Runtime": "1.0.0-*",
+        "Microsoft.AspNet.Mvc": "6.0.0-*"
+    },
+    "frameworks": {
+        "aspnet50": {
+            "dependencies": {
+            },
+            "frameworkAssemblies": {
+                "System.ComponentModel.DataAnnotations": "4.0.0.0"
+            }
+        },
+        "aspnetcore50": {
+            "dependencies": {
+                "System.Runtime": "4.0.20-*",
+                "System.ComponentModel.Annotations": "4.0.10-*",
+                "System.Reflection": "4.0.10-*",
+                "System.Reflection.Extensions": "4.0.0-*"
+            }
+        }
+    }
+}

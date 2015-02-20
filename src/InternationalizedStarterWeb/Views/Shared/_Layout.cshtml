@@ -1,0 +1,61 @@
+﻿@using System.Globalization
+@using Microsoft.Framework.Localization
+
+@inject ILocalizerFactory LocalizerFactory
+
+@{ 
+    var locString = LocalizerFactory.Create("Views.Shared._Layout.cshtml", "");
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - @locString["My ASP.NET Application"]</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-touch-carousel/css/bootstrap-touch-carousel.css" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink(locString["Application name"], "Index", "Home", new { area = "", culture = CultureInfo.CurrentUICulture }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink(locString["Home"], "Index", "Home")</li>
+                    <li>@Html.ActionLink(locString["About"], "About", "Home")</li>
+                    <li>@Html.ActionLink(locString["Contact"], "Contact", "Home")</li>
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - @locString["My ASP.NET Application"]</p>
+            <p>
+                CultureInfo.CurrentCulture.DisplayName = @CultureInfo.CurrentCulture.DisplayName<br />
+                CultureInfo.CurrentUICulture.DisplayName = @CultureInfo.CurrentUICulture.DisplayName<br />
+                @locString["Today is: {0}", DateTime.Now]<br />
+                @Html.ActionLink(locString["Resources for this view"], "ForView", "Resources", new { culture = CultureInfo.CurrentUICulture, view = ViewContext.View.Path })
+            </p>
+        </footer>
+    </div>
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/hammer.js/hammer.js"></script>
+    <script src="~/lib/bootstrap-touch-carousel/js/bootstrap-touch-carousel.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
