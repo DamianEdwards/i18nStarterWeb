@@ -116,6 +116,9 @@ DocProject/Help/*.HxT
 DocProject/Help/*.HxC
 DocProject/Help/*.hhc
 DocProject/Help/*.hhk
+
+
+project.lock.json
 DocProject/Help/*.hhp
 DocProject/Help/Html2
 DocProject/Help/html
@@ -149,6 +152,7 @@ AppPackages/
 
 # Others
 sql/
+
 *.Cache
 ClientBin/
 [Ss]tyle[Cc]op.*
