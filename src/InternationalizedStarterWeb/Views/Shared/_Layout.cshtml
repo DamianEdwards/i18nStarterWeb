@@ -1,10 +1,10 @@
 ﻿@using System.Globalization
 @using Microsoft.Framework.Localization
 
-@inject ILocalizerFactory LocalizerFactory
+@inject IStringLocalizerFactory StringLocalizerFactory
 
 @{ 
-    var locString = LocalizerFactory.Create("Views.Shared._Layout.cshtml", "");
+    var locString = StringLocalizerFactory.Create("Views.Shared._Layout.cshtml", "");
 }
 
 <!DOCTYPE html>

@@ -4,17 +4,17 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.WebUtilities.Encoders;
 using Microsoft.Framework.Localization;
+using Microsoft.Framework.WebEncoders;
 
 namespace Microsoft.AspNet.Mvc.Localization
 {
     public class HtmlLocalizer : IHtmlLocalizer
     {
-        private readonly ILocalizer _localizer;
+        private readonly IStringLocalizer _localizer;
         private readonly IHtmlEncoder _encoder;
 
-        public HtmlLocalizer(ILocalizer localizer, IHtmlEncoder encoder)
+        public HtmlLocalizer(IStringLocalizer localizer, IHtmlEncoder encoder)
         {
             _localizer = localizer;
             _encoder = encoder;
@@ -22,7 +22,7 @@ namespace Microsoft.AspNet.Mvc.Localization
 
         public virtual IHtmlLocalizer WithCulture(CultureInfo culture) => new HtmlLocalizer(_localizer.WithCulture(culture), _encoder);
 
-        ILocalizer ILocalizer.WithCulture(CultureInfo culture) => WithCulture(culture);
+        IStringLocalizer IStringLocalizer.WithCulture(CultureInfo culture) => WithCulture(culture);
 
         public virtual LocalizedString this[string key] => _localizer[key];
 

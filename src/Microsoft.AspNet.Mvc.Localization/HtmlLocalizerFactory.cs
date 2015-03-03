@@ -1,15 +1,15 @@
 ﻿using System;
-using Microsoft.AspNet.WebUtilities.Encoders;
 using Microsoft.Framework.Localization;
+using Microsoft.Framework.WebEncoders;
 
 namespace Microsoft.AspNet.Mvc.Localization
 {
     public class HtmlLocalizerFactory : IHtmlLocalizerFactory
     {
-        private readonly ILocalizerFactory _factory;
+        private readonly IStringLocalizerFactory _factory;
         private readonly IHtmlEncoder _encoder;
 
-        public HtmlLocalizerFactory(ILocalizerFactory localizerFactory, IHtmlEncoder encoder)
+        public HtmlLocalizerFactory(IStringLocalizerFactory localizerFactory, IHtmlEncoder encoder)
         {
             _factory = localizerFactory;
             _encoder = encoder;

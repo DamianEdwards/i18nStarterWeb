@@ -2,7 +2,7 @@
 
 namespace Microsoft.Framework.Localization
 {
-    public interface ILocalizer<T> : ILocalizer
+    public interface IStringLocalizer<T> : IStringLocalizer
     {
 
     }

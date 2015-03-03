@@ -5,16 +5,16 @@ using System.Globalization;
 
 namespace Microsoft.Framework.Localization
 {
-    public class Localizer<TResourceSource> : ILocalizer<TResourceSource>
+    public class StringLocalizer<TResourceSource> : IStringLocalizer<TResourceSource>
     {
-        private ILocalizer _localizer;
+        private IStringLocalizer _localizer;
 
-        public Localizer(ILocalizerFactory factory)
+        public StringLocalizer(IStringLocalizerFactory factory)
         {
             _localizer = factory.Create(typeof(TResourceSource));
         }
 
-        public virtual ILocalizer WithCulture(CultureInfo culture) => _localizer.WithCulture(culture);
+        public virtual IStringLocalizer WithCulture(CultureInfo culture) => _localizer.WithCulture(culture);
 
         public virtual LocalizedString this[string key] => _localizer[key];
 

@@ -5,11 +5,11 @@ using System.Resources;
 
 namespace Microsoft.Framework.Localization
 {
-    public class ResourceManagerWithCultureLocalizer : ResourceManagerLocalizer
+    public class ResourceManagerWithCultureStringLocalizer : ResourceManagerStringLocalizer
     {
         private readonly CultureInfo _culture;
 
-        public ResourceManagerWithCultureLocalizer(ResourceManager resourceManager, CultureInfo culture)
+        public ResourceManagerWithCultureStringLocalizer(ResourceManager resourceManager, CultureInfo culture)
             : base(resourceManager)
         {
             _culture = culture;

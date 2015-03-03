@@ -9,11 +9,11 @@ namespace InternationalizedStarterWeb.Controllers
 {
     public class ResourcesController : Controller
     {
-        private readonly ILocalizerFactory _localizerFactory;
+        private readonly IStringLocalizerFactory _localizerFactory;
         private readonly IApplicationEnvironment _app;
         private readonly IFileProvider _files;
 
-        public ResourcesController(ILocalizerFactory localizerFactory, IApplicationEnvironment app)
+        public ResourcesController(IStringLocalizerFactory localizerFactory, IApplicationEnvironment app)
         {
             _localizerFactory = localizerFactory;
             _app = app;

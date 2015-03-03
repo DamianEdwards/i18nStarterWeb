@@ -17,7 +17,7 @@ namespace Microsoft.AspNet.Mvc.Localization
 
         public virtual IHtmlLocalizer WithCulture(CultureInfo culture) => _localizer.WithCulture(culture);
 
-        ILocalizer ILocalizer.WithCulture(CultureInfo culture) => _localizer.WithCulture(culture);
+        IStringLocalizer IStringLocalizer.WithCulture(CultureInfo culture) => _localizer.WithCulture(culture);
 
         public virtual LocalizedString this[string key] => _localizer[key];
 

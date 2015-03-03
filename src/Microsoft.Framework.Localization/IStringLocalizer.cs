@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace Microsoft.Framework.Localization
 {
-    public interface ILocalizer : IEnumerable<LocalizedString>
+    public interface IStringLocalizer : IEnumerable<LocalizedString>
     {
         LocalizedString this[string name] { get; }
 
@@ -14,6 +14,6 @@ namespace Microsoft.Framework.Localization
 
         LocalizedString GetString(string name, params object[] values);
 
-        ILocalizer WithCulture(CultureInfo culture);
+        IStringLocalizer WithCulture(CultureInfo culture);
     }
 }

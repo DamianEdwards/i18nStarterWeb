@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.AspNet.Mvc.Localization;
-using Microsoft.AspNet.WebUtilities.Encoders;
+using Microsoft.Framework.WebEncoders;
 
 namespace Microsoft.Framework.DependencyInjection
 {

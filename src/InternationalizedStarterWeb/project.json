@@ -20,7 +20,7 @@
         "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-*",
         "Microsoft.AspNet.Localization": "1.0.0-*",
         "Microsoft.AspNet.Mvc.Localization": "1.0.0-*",
-        "Microsoft.Framework.FileSystemGlobbing": "1.0.0-*"
+        "Microsoft.Framework.FileSystemGlobbing": { "type": "build", "version": "1.0.0-*" }
     },
     "commands": {
         /* Change the port number when you are self hosting this application */
@@ -46,6 +46,6 @@
     ],
     "scripts": {
         "postrestore": [ "npm install" ],
-        "prepare": [ "grunt bower:install", "resgen" ]
+        "prepare": [ "grunt bower:install" ]
     }
 }

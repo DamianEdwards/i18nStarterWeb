@@ -8,10 +8,10 @@ namespace Microsoft.AspNet.Mvc.Localization
     public class ValidationAttributeLocalizer<TAttribute, TResourceSource> : IValidationAttributeLocalizer<TAttribute, TResourceSource>
         where TAttribute : ValidationAttribute
     {
-        private readonly ILocalizer _localizer;
+        private readonly IStringLocalizer _localizer;
         private readonly IValidationLocalizer<TAttribute> _attributeLocalizer;
 
-        public ValidationAttributeLocalizer(ILocalizer<TResourceSource> localizer, IValidationLocalizer<TAttribute> attributeLocalizer)
+        public ValidationAttributeLocalizer(IStringLocalizer<TResourceSource> localizer, IValidationLocalizer<TAttribute> attributeLocalizer)
         {
             _localizer = localizer;
             _attributeLocalizer = attributeLocalizer;

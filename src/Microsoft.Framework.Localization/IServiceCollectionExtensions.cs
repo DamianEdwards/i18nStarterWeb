@@ -7,8 +7,8 @@ namespace Microsoft.Framework.DependencyInjection
     {
         public static IServiceCollection AddLocalization(this IServiceCollection services)
         {
-            services.AddSingleton<ILocalizerFactory, ResourceManagerLocalizerFactory>();
-            services.AddTransient(typeof(ILocalizer<>), typeof(Localizer<>));
+            services.AddSingleton<IStringLocalizerFactory, ResourceManagerStringLocalizerFactory>();
+            services.AddTransient(typeof(IStringLocalizer<>), typeof(StringLocalizer<>));
             return services;
         }
     }

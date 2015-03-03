@@ -32,7 +32,7 @@ namespace Microsoft.AspNet.Mvc.Localization
 
         public LocalizedHtmlString Html(string key, params object[] arguments) => _localizer.Html(key, arguments);
 
-        public ILocalizer WithCulture(CultureInfo culture) => _localizer.WithCulture(culture);
+        public IStringLocalizer WithCulture(CultureInfo culture) => _localizer.WithCulture(culture);
 
         public IEnumerator<LocalizedString> GetEnumerator() => _localizer.GetEnumerator();
 

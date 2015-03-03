@@ -19,7 +19,7 @@ namespace Microsoft.AspNet.Mvc.Localization
     public class ValidationAttributeLocalizationContext<TAttribute>
         where TAttribute : ValidationAttribute
     {
-        public ILocalizer Localizer { get; set; }
+        public IStringLocalizer Localizer { get; set; }
 
         public ValidationContext ValidationContext { get; set; }
 

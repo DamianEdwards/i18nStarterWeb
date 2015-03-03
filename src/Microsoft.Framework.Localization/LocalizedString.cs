@@ -22,11 +22,11 @@ namespace Microsoft.Framework.Localization
             return localizedString.Value;
         }
 
-        public string Key { get; set; }
+        public string Key { get; private set; }
 
         public string Value { get; }
 
-        public bool ResourceNotFound { get; set; }
+        public bool ResourceNotFound { get; private set; }
 
         public override string ToString() => Value;
     }

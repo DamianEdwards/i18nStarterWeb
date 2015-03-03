@@ -4,7 +4,7 @@ using Microsoft.Framework.Localization;
 
 namespace Microsoft.AspNet.Mvc.Localization
 {
-    public interface IHtmlLocalizer : ILocalizer
+    public interface IHtmlLocalizer : IStringLocalizer
     {
         new IHtmlLocalizer WithCulture(CultureInfo culture);
 

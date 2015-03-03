@@ -7,12 +7,12 @@ using System.Resources;
 
 namespace Microsoft.Framework.Localization
 {
-    public class ResourceManagerLocalizer : ILocalizer
+    public class ResourceManagerStringLocalizer : IStringLocalizer
     {
         private readonly ConcurrentDictionary<MissingManifestCacheKey, object> _missingManifestCache =
             new ConcurrentDictionary<MissingManifestCacheKey, object>();
 
-        public ResourceManagerLocalizer(ResourceManager resourceManager)
+        public ResourceManagerStringLocalizer(ResourceManager resourceManager)
         {
             ResourceManager = resourceManager;
         }
@@ -36,11 +36,11 @@ namespace Microsoft.Framework.Localization
             return new LocalizedString(name, value, resourceNotFound: format == null);
         }
 
-        public ILocalizer WithCulture(CultureInfo culture)
+        public IStringLocalizer WithCulture(CultureInfo culture)
         {
             return culture == null
-                ? new ResourceManagerLocalizer(ResourceManager)
-                : new ResourceManagerWithCultureLocalizer(ResourceManager, culture);
+                ? new ResourceManagerStringLocalizer(ResourceManager)
+                : new ResourceManagerWithCultureStringLocalizer(ResourceManager, culture);
         }
 
         protected string GetStringSafely(string name, CultureInfo culture)
