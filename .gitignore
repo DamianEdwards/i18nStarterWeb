@@ -191,3 +191,5 @@ FakesAssemblies/
 [Aa]rtifacts/
 bower_components/
 node_modules/
+
+.vs
