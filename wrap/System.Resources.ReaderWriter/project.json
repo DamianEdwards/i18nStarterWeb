@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0-*",
+  "frameworks": {
+    "dnxcore50": {
+      "bin": {
+        "assembly": "../../lib/System.Resources.ReaderWriter.dll",
+        "pdb": "../../lib/System.Resources.ReaderWriter.pdb"
+      }
+    },
+    "net451": {
+      "bin": {
+        "assembly": "../../lib/System.Resources.ReaderWriter.dll",
+        "pdb": "../../lib/System.Resources.ReaderWriter.pdb"
+      }
+    }
+  }
+}

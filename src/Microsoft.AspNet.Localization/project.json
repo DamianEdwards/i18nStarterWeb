@@ -10,13 +10,20 @@
       "dependencies": {
       }
     },
-    "dnxcore50": {
-      "dependencies": {
-        "System.Runtime": "4.0.20-*",
-        "System.Threading": "4.0.10-*",
-        "System.Threading.Tasks": "4.0.10-*",
-        "System.Globalization": "4.0.10-*"
-      }
+
+    "frameworks" : {
+        "dnx451" : { 
+            "dependencies": {
+            }
+        },
+        "dnxcore50" : { 
+            "dependencies": {
+                "System.Runtime": "4.0.20-*",
+                "System.Threading": "4.0.10-*",
+                "System.Threading.Tasks": "4.0.10-*",
+                "System.Globalization": "4.0.10-*"
+            }
+        }
     }
   }
 }

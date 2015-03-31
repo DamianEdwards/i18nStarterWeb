@@ -5,7 +5,6 @@ using System.Linq;
 using System.Resources;
 using System.Xml.Linq;
 using Microsoft.Framework.FileSystemGlobbing;
-using Microsoft.Framework.Runtime;
 using Microsoft.Framework.Runtime.Roslyn;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -172,6 +171,97 @@ namespace InternationalizedStarterWeb.Compiler.Preprocess
                 // Otherwise, it represents a single file
                 return candidate;
             }
+        }
+    }
+
+    public sealed class FileFormatException : Exception
+    {
+        public FileFormatException(string message) :
+            base(message)
+        {
+        }
+
+        public FileFormatException(string message, Exception innerException) :
+            base(message, innerException)
+        {
+
+        }
+
+        public string Path { get; private set; }
+        public int Line { get; private set; }
+        public int Column { get; private set; }
+
+        private FileFormatException WithLineInfo(IJsonLineInfo lineInfo)
+        {
+            if (lineInfo != null)
+            {
+                Line = lineInfo.LineNumber;
+                Column = lineInfo.LinePosition;
+            }
+
+            return this;
+        }
+
+        public static FileFormatException Create(Exception exception, JToken value, string path)
+        {
+            var lineInfo = (IJsonLineInfo)value;
+
+            return new FileFormatException(exception.Message, exception)
+            {
+                Path = path
+            }
+            .WithLineInfo(lineInfo);
+        }
+
+        public static FileFormatException Create(string message, JToken value, string path)
+        {
+            var lineInfo = (IJsonLineInfo)value;
+
+            return new FileFormatException(message)
+            {
+                Path = path
+            }
+            .WithLineInfo(lineInfo);
+        }
+
+        internal static FileFormatException Create(JsonReaderException exception, string path)
+        {
+            return new FileFormatException(exception.Message, exception)
+            {
+                Path = path,
+                Column = exception.LinePosition,
+                Line = exception.LineNumber
+            };
+        }
+    }
+
+    public static class JTokenExtensions
+    {
+        public static T[] ValueAsArray<T>(this JToken jToken)
+        {
+            return jToken.Select(a => a.Value<T>()).ToArray();
+        }
+
+        public static T[] ValueAsArray<T>(this JToken jToken, string name)
+        {
+            return jToken?[name]?.ValueAsArray<T>();
+        }
+
+        public static T GetValue<T>(this JToken token, string name)
+        {
+            if (token == null)
+            {
+                return default(T);
+            }
+
+            var obj = token[name];
+
+            if (obj == null)
+            {
+                return default(T);
+            }
+
+            return obj.Value<T>();
         }
     }
 }
