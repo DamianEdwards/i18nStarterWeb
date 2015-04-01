@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Reflection;
 using System.Resources;
 
 namespace Microsoft.Framework.Localization
@@ -9,8 +10,13 @@ namespace Microsoft.Framework.Localization
     {
         private readonly CultureInfo _culture;
 
+#if DNX451
         public ResourceManagerWithCultureStringLocalizer(ResourceManager resourceManager, CultureInfo culture)
-            : base(resourceManager)
+        : base(resourceManager)
+#elif DNXCORE50
+        public ResourceManagerWithCultureStringLocalizer(ResourceManager resourceManager, Assembly assembly, string baseName, CultureInfo culture)
+            : base(resourceManager, assembly, baseName)
+#endif
         {
             _culture = culture;
         }

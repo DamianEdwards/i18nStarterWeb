@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Reflection;
 using System.Resources;
 
 namespace Microsoft.Framework.Localization
@@ -12,12 +13,28 @@ namespace Microsoft.Framework.Localization
         private readonly ConcurrentDictionary<MissingManifestCacheKey, object> _missingManifestCache =
             new ConcurrentDictionary<MissingManifestCacheKey, object>();
 
+#if DNX451
         public ResourceManagerStringLocalizer(ResourceManager resourceManager)
         {
             ResourceManager = resourceManager;
+            ResourceBaseName = resourceManager.BaseName;
         }
+#elif DNXCORE50
+        public ResourceManagerStringLocalizer(ResourceManager resourceManager, Assembly resourceAssembly, string baseName)
+        {
+            ResourceManager = resourceManager;
+            ResourceAssembly = resourceAssembly;
+            ResourceBaseName = baseName;
+        }
+#endif
 
         protected ResourceManager ResourceManager { get; }
+
+#if DNXCORE50
+        protected Assembly ResourceAssembly { get; }
+#endif
+
+        protected string ResourceBaseName { get; }
 
         public virtual LocalizedString this[string name] => GetString(name);
         
@@ -39,8 +56,13 @@ namespace Microsoft.Framework.Localization
         public IStringLocalizer WithCulture(CultureInfo culture)
         {
             return culture == null
+#if DNX451
                 ? new ResourceManagerStringLocalizer(ResourceManager)
                 : new ResourceManagerWithCultureStringLocalizer(ResourceManager, culture);
+#elif DNXCORE50
+                ? new ResourceManagerStringLocalizer(ResourceManager, ResourceAssembly, ResourceBaseName)
+                : new ResourceManagerWithCultureStringLocalizer(ResourceManager, ResourceAssembly, ResourceBaseName, culture);
+#endif
         }
 
         protected string GetStringSafely(string name, CultureInfo culture)
@@ -75,7 +97,16 @@ namespace Microsoft.Framework.Localization
         protected IEnumerator<LocalizedString> GetEnumerator(CultureInfo culture)
         {
 #if DNX451
-            var resourceSet = ResourceManager.GetResourceSet(culture, createIfNotExists: true, tryParents: true);
+            ResourceSet resourceSet;
+            try
+            {
+                resourceSet = ResourceManager.GetResourceSet(culture, createIfNotExists: true, tryParents: true);
+            }
+            catch (MissingManifestResourceException)
+            {
+                yield break;
+            }
+            
             var enumerator = resourceSet.GetEnumerator();
 
             while (enumerator.MoveNext())
@@ -83,7 +114,18 @@ namespace Microsoft.Framework.Localization
                 yield return new LocalizedString(enumerator.Key.ToString(), enumerator.Value.ToString());
             }
 #else
-            throw new NotSupportedException(".NET Core doesn't support resource enumeration yet: https://github.com/dotnet/corefx/issues/948");
+            // TODO: Cache this maybe, at least the stream look up
+            var resourceStreamName = $"{ResourceBaseName}.resources";
+            using (var invariantCultureResourceStream = ResourceAssembly.GetManifestResourceStream(resourceStreamName))
+            using (var reader = new ResourceReader(invariantCultureResourceStream))
+            {
+                foreach (DictionaryEntry entry in reader)
+                {
+                    var resourceName = (string)entry.Key;
+                    var value = GetStringSafely(resourceName, culture);
+                    yield return new LocalizedString(resourceName, value ?? resourceName, resourceNotFound: value == null);
+                }
+            }
 #endif
         }
 

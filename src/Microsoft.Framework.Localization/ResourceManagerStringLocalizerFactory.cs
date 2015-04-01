@@ -19,30 +19,43 @@ namespace Microsoft.Framework.Localization
 
         public IStringLocalizer Create(Type resourceSource)
         {
+            var typeInfo = resourceSource.GetTypeInfo();
+            var assembly = typeInfo.Assembly;
+            var baseName = typeInfo.FullName;
+#if DNX451
             return new ResourceManagerStringLocalizer(new ResourceManager(resourceSource));
+#else
+            return new ResourceManagerStringLocalizer(new ResourceManager(resourceSource), assembly, baseName);
+#endif
         }
 
         public IStringLocalizer Create(string baseName, string location)
         {
-            if (!string.IsNullOrEmpty(_options.ResourceFilesDirectory))
-            {
-#if DNX451
-                if (baseName.StartsWith(_appEnv.ApplicationName + "."))
-                {
-                    baseName = baseName.Substring(_appEnv.ApplicationName.Length + 1);
-                }                
+            var assembly = Assembly.Load(new AssemblyName(location ?? _appEnv.ApplicationName));
 
-                return new ResourceManagerStringLocalizer(
-                    ResourceManager.CreateFileBasedResourceManager(
-                        baseName,
-                        _options.ResourceFilesDirectory,
-                        usingResourceSet: null));
-#else
-                throw new NotSupportedException(".NET Core doesn't support file based resources yet: https://github.com/dotnet/corefx/issues/947");
-#endif
-            }
-            var assembly = Assembly.Load(new AssemblyName(location));
+#if DNX451
             return new ResourceManagerStringLocalizer(new ResourceManager(baseName, assembly));
+#else
+            return new ResourceManagerStringLocalizer(new ResourceManager(baseName, assembly), assembly, baseName);
+#endif
+            
+//            if (!string.IsNullOrEmpty(_options.ResourceFilesDirectory))
+//            {
+//#if DNX451
+//                if (baseName.StartsWith(_appEnv.ApplicationName + "."))
+//                {
+//                    baseName = baseName.Substring(_appEnv.ApplicationName.Length + 1);
+//                }                
+
+//                return new ResourceManagerStringLocalizer(
+//                    ResourceManager.CreateFileBasedResourceManager(
+//                        baseName,
+//                        _options.ResourceFilesDirectory,
+//                        usingResourceSet: null));
+//#else
+//                throw new NotSupportedException(".NET Core doesn't support file based resources yet: https://github.com/dotnet/corefx/issues/947");
+//#endif
+//            }
         }
     }
 
