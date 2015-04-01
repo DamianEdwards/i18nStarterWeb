@@ -22,7 +22,8 @@ namespace Microsoft.Framework.Localization
 
         public virtual LocalizedString GetString(string key) => _localizer.GetString(key);
 
-        public virtual LocalizedString GetString(string key, params object[] arguments) => _localizer.GetString(key, arguments);
+        public virtual LocalizedString GetString(string key, params object[] arguments) =>
+            _localizer.GetString(key, arguments);
 
         public IEnumerator<LocalizedString> GetEnumerator() => _localizer.GetEnumerator();
 

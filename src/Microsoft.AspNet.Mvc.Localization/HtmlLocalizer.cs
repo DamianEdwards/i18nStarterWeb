@@ -50,7 +50,7 @@ namespace Microsoft.AspNet.Mvc.Localization
 
         protected object[] EncodeArguments(object[] arguments)
         {
-            object[] encodedArguments = new object[arguments.Length];
+            var encodedArguments = new object[arguments.Length];
             for (var index = 0; index != arguments.Length; ++index)
             {
                 var argument = arguments[index];

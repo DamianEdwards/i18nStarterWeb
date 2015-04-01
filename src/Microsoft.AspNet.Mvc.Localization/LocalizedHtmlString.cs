@@ -17,10 +17,10 @@ namespace Microsoft.AspNet.Mvc.Localization
             Key = key;
         }
 
-        public string Key { get; private set; }
+        public string Key { get; }
 
         public string Value => ToString();
 
-        public bool ResourceNotFound { get; private set; }
+        public bool ResourceNotFound { get; }
     }
 }

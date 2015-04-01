@@ -18,6 +18,7 @@ namespace Microsoft.AspNet.Localization
 
         public async Task Invoke(HttpContext context)
         {
+            // TODO: Make this read from Accept-Language header, cookie, app-provided delegate, etc.
             if (context.Request.QueryString.HasValue)
             {
                 var queryCulture = context.Request.Query["culture"];
@@ -34,20 +35,17 @@ namespace Microsoft.AspNet.Localization
 
                     await _next(context);
 
-                    // NOTE: If we're on a different thread now the culture is not here but is still on the old thread
-                    //       which could be used on another request. This will be fixed by the XRE.
-
-                    SetCurrentCulture(originalCulture, originalUICulture);
-
                     return;
                 }
             }
             else
             {
+                // NOTE: The below doesn't seem to be needed anymore now that DNX is correctly managing culture across
+                //       async calls but we'll need to verify properly.
                 // Forcibly set thread to en-US as sometimes previous threads have wrong culture across async calls, 
                 // see note above.
-                var defaultCulture = new CultureInfo("en-US");
-                SetCurrentCulture(defaultCulture, defaultCulture);
+                //var defaultCulture = new CultureInfo("en-US");
+                //SetCurrentCulture(defaultCulture, defaultCulture);
             }
 
             await _next(context);
@@ -55,12 +53,12 @@ namespace Microsoft.AspNet.Localization
 
         private void SetCurrentCulture(CultureInfo culture, CultureInfo uiCulture)
         {
-#if DNXCORE50
-            CultureInfo.CurrentCulture = culture;
-            CultureInfo.CurrentUICulture = uiCulture;
-#else
+#if DNX451
             Thread.CurrentThread.CurrentCulture = culture;
             Thread.CurrentThread.CurrentUICulture = uiCulture;
+#else
+            CultureInfo.CurrentCulture = culture;
+            CultureInfo.CurrentUICulture = uiCulture;
 #endif
         }
     }

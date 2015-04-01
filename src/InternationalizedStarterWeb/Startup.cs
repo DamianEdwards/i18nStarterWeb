@@ -32,11 +32,6 @@ namespace InternationalizedStarterWeb
         // This method gets called by the runtime.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<ResourceManagerLocalizerOptions>(options =>
-            {
-                options.ResourceFilesDirectory = Path.Combine(_appEnv.ApplicationBasePath, "Resources", "bin");
-            }, "");
-
             // Add MVC services to the services container.
             services.AddMvc();
             
