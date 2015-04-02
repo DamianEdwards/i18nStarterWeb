@@ -11,13 +11,11 @@ namespace InternationalizedStarterWeb.Controllers
     {
         private readonly IStringLocalizerFactory _localizerFactory;
         private readonly IApplicationEnvironment _app;
-        private readonly IFileProvider _files;
 
         public ResourcesController(IStringLocalizerFactory localizerFactory, IApplicationEnvironment app)
         {
             _localizerFactory = localizerFactory;
             _app = app;
-            _files = new PhysicalFileProvider(_app.ApplicationBasePath + "/Resources/bin");
         }
 
         public IDictionary<string, string> Index([FromQuery] string baseName)
