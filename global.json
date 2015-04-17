@@ -1,6 +1,6 @@
 ﻿{
     "sources": [ "src", "test" ],
     "sdk": {
-        "version": "dev"
+        "version": "default"
     }
 }

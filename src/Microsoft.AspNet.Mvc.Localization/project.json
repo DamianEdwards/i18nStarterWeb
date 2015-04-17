@@ -7,14 +7,14 @@
         "Microsoft.Framework.WebEncoders": "1.0.0-*"
     },
     "frameworks": {
-        "aspnet50": {
+        "dnx451": {
             "dependencies": {
             },
             "frameworkAssemblies": {
                 "System.ComponentModel.DataAnnotations": "4.0.0.0"
             }
         },
-        "aspnetcore50": {
+        "dnxcore50": {
             "dependencies": {
                 "System.Runtime": "4.0.20-*",
                 "System.ComponentModel.Annotations": "4.0.10-*",
