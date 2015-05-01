@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22609.0
+VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2AC17A3F-DF92-4270-AAE9-B602D97C5C39}"
 EndProject
@@ -10,13 +10,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "InternationalizedStarterWeb", "src\InternationalizedStarterWeb\InternationalizedStarterWeb.kproj", "{F1CB68FC-E732-4AC4-8EE6-12FCBAE48A8F}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "InternationalizedStarterWeb", "src\InternationalizedStarterWeb\InternationalizedStarterWeb.xproj", "{F1CB68FC-E732-4AC4-8EE6-12FCBAE48A8F}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Framework.Localization", "src\Microsoft.Framework.Localization\Microsoft.Framework.Localization.kproj", "{976596B7-A527-4C8D-A897-1DC40D762FD2}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Framework.Localization", "src\Microsoft.Framework.Localization\Microsoft.Framework.Localization.xproj", "{976596B7-A527-4C8D-A897-1DC40D762FD2}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.AspNet.Mvc.Localization", "src\Microsoft.AspNet.Mvc.Localization\Microsoft.AspNet.Mvc.Localization.kproj", "{FC7F3652-8F19-4134-B672-C0EDC54E9909}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.AspNet.Mvc.Localization", "src\Microsoft.AspNet.Mvc.Localization\Microsoft.AspNet.Mvc.Localization.xproj", "{FC7F3652-8F19-4134-B672-C0EDC54E9909}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.AspNet.Localization", "src\Microsoft.AspNet.Localization\Microsoft.AspNet.Localization.kproj", "{16025136-185E-4E0D-A3B9-20DA9489B057}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.AspNet.Localization", "src\Microsoft.AspNet.Localization\Microsoft.AspNet.Localization.xproj", "{16025136-185E-4E0D-A3B9-20DA9489B057}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -74,7 +74,7 @@ namespace Microsoft.Framework.Localization
 
         protected IEnumerator<LocalizedString> GetEnumerator(CultureInfo culture)
         {
-#if ASPNET50
+#if DNX451
             var resourceSet = ResourceManager.GetResourceSet(culture, createIfNotExists: true, tryParents: true);
             var enumerator = resourceSet.GetEnumerator();
 

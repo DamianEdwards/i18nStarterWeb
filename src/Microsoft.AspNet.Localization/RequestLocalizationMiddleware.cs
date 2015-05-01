@@ -55,7 +55,7 @@ namespace Microsoft.AspNet.Localization
 
         private void SetCurrentCulture(CultureInfo culture, CultureInfo uiCulture)
         {
-#if ASPNETCORE50
+#if DNXCORE50
             CultureInfo.CurrentCulture = culture;
             CultureInfo.CurrentUICulture = uiCulture;
 #else

@@ -1,20 +1,20 @@
 {
-    "version": "1.0.0-*",
-    "dependencies": {
-        "Microsoft.Framework.Localization": "1.0.0-*",
-        "Microsoft.Framework.Runtime": "1.0.0-*",
-        "Microsoft.AspNet.Mvc": "6.0.0-*",
-        "Microsoft.Framework.WebEncoders": "1.0.0-*"
-    },
+  "version": "1.0.0-*",
+  "dependencies": {
+    "Microsoft.Framework.Localization": "1.0.0-*",
+    "Microsoft.Framework.Runtime.Interfaces": "1.0.0-beta4",
+    "Microsoft.AspNet.Mvc": "6.0.0-beta4",
+    "Microsoft.Framework.WebEncoders": "1.0.0-beta4"
+  },
     "frameworks": {
-        "aspnet50": {
+        "dnx451": {
             "dependencies": {
             },
             "frameworkAssemblies": {
                 "System.ComponentModel.DataAnnotations": "4.0.0.0"
             }
         },
-        "aspnetcore50": {
+        "dnxcore50": {
             "dependencies": {
                 "System.Runtime": "4.0.20-*",
                 "System.ComponentModel.Annotations": "4.0.10-*",

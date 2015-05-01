@@ -26,7 +26,7 @@ namespace Microsoft.Framework.Localization
         {
             if (!string.IsNullOrEmpty(_options.ResourceFilesDirectory))
             {
-#if ASPNET50
+#if DNX451
                 if (baseName.StartsWith(_appEnv.ApplicationName + "."))
                 {
                     baseName = baseName.Substring(_appEnv.ApplicationName.Length + 1);

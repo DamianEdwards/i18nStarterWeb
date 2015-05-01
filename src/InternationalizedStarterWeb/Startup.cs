@@ -15,8 +15,12 @@ namespace InternationalizedStarterWeb
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        private readonly IApplicationEnvironment _appEnv;
+
+        public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         {
+            _appEnv = appEnv;
+
             // Setup configuration sources.
             Configuration = new Configuration()
                 .AddJsonFile("config.json")
@@ -26,11 +30,11 @@ namespace InternationalizedStarterWeb
         public IConfiguration Configuration { get; set; }
 
         // This method gets called by the runtime.
-        public void ConfigureServices(IServiceCollection services, IApplicationEnvironment appEnv)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<ResourceManagerLocalizerOptions>(options =>
             {
-                options.ResourceFilesDirectory = Path.Combine(appEnv.ApplicationBasePath, "Resources", "bin");
+                options.ResourceFilesDirectory = Path.Combine(_appEnv.ApplicationBasePath, "Resources", "bin");
             }, "");
 
             // Add MVC services to the services container.
