@@ -1,17 +1,11 @@
 ﻿{
   "version": "1.0.0-*",
   "dependencies": {
-    "Microsoft.Framework.Runtime.Interfaces": "1.0.0-beta4",
+    "Microsoft.Framework.Runtime.Abstractions": "1.0.0-*",
     "Microsoft.AspNet.Http.Extensions": "1.0.0-*"
   },
 
-  "frameworks": {
-    "dnx451": {
-      "dependencies": {
-      }
-    },
-
-    "frameworks" : {
+  "frameworks" : {
         "dnx451" : { 
             "dependencies": {
             }
@@ -25,5 +19,4 @@
             }
         }
     }
-  }
 }

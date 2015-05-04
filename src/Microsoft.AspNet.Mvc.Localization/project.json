@@ -2,7 +2,7 @@
     "version": "1.0.0-*",
     "dependencies": {
         "Microsoft.Framework.Localization": "1.0.0-*",
-        "Microsoft.Framework.Runtime.Interfaces": "1.0.0-*",
+        "Microsoft.Framework.Runtime.Abstractions": "1.0.0-*",
         "Microsoft.AspNet.Mvc": "6.0.0-*",
         "Microsoft.Framework.WebEncoders": "1.0.0-*"
     },
