@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
-#if DNXCORE50
 using System.Reflection;
-#endif
 using System.Resources;
 
 namespace Microsoft.Framework.Localization
@@ -15,32 +13,22 @@ namespace Microsoft.Framework.Localization
         private readonly ConcurrentDictionary<MissingManifestCacheKey, object> _missingManifestCache =
             new ConcurrentDictionary<MissingManifestCacheKey, object>();
 
-#if DNX451
-        public ResourceManagerStringLocalizer(ResourceManager resourceManager)
-        {
-            ResourceManager = resourceManager;
-            ResourceBaseName = resourceManager.BaseName;
-        }
-#else
         public ResourceManagerStringLocalizer(
-            ResourceManager resourceManager,
-            Assembly resourceAssembly,
-            string baseName)
+                    ResourceManager resourceManager,
+                    Assembly resourceAssembly,
+                    string baseName)
         {
             ResourceManager = resourceManager;
             ResourceAssembly = resourceAssembly;
             ResourceBaseName = baseName;
         }
-#endif
 
         protected ResourceManager ResourceManager { get; }
 
-#if !DNX451
         protected Assembly ResourceAssembly { get; }
-#endif
 
         protected string ResourceBaseName { get; }
-
+        
         public virtual LocalizedString this[string name] => GetString(name);
         
         public virtual LocalizedString this[string name, params object[] arguments] => GetString(name, arguments);
@@ -61,17 +49,12 @@ namespace Microsoft.Framework.Localization
         public IStringLocalizer WithCulture(CultureInfo culture)
         {
             return culture == null
-#if DNX451
-                ? new ResourceManagerStringLocalizer(ResourceManager)
-                : new ResourceManagerWithCultureStringLocalizer(ResourceManager, culture);
-#else
                 ? new ResourceManagerStringLocalizer(ResourceManager, ResourceAssembly, ResourceBaseName)
                 : new ResourceManagerWithCultureStringLocalizer(
                     ResourceManager,
                     ResourceAssembly,
                     ResourceBaseName,
                     culture);
-#endif
         }
 
         protected string GetStringSafely(string name, CultureInfo culture)
@@ -106,21 +89,24 @@ namespace Microsoft.Framework.Localization
         protected IEnumerator<LocalizedString> GetEnumerator(CultureInfo culture)
         {
             // TODO: I'm sure something here should be cached, probably the whole result
-            var currentCulture = culture;
+            var resourceNames = GetResourceNamesFromCultureHierarchy(culture);
+
+            foreach (var name in resourceNames)
+            {
+                var value = GetStringSafely(name, culture);
+                yield return new LocalizedString(name, value ?? name, resourceNotFound: value == null);
+            }
+        }
+
+        private IEnumerable<string> GetResourceNamesFromCultureHierarchy(CultureInfo startingCulture)
+        {
+            var currentCulture = startingCulture;
             var resourceNames = new HashSet<string>();
 
             while (true)
             {
                 try
                 {
-#if DNX451
-                    // NOTE: Once System.Resources.ReaderWriter replaces System.Resources.ResourceWriter we can
-                    //       just use that everywhere, no need to use GetResourceSet on DNX451.
-                    var resources = ResourceManager.GetResourceSet(
-                        currentCulture, 
-                        createIfNotExists: true,
-                        tryParents: true);
-#else
                     var resourceStreamName = ResourceBaseName;
                     if (!string.IsNullOrEmpty(currentCulture.Name))
                     {
@@ -130,14 +116,12 @@ namespace Microsoft.Framework.Localization
                     using (var cultureResourceStream = ResourceAssembly.GetManifestResourceStream(resourceStreamName))
                     using (var resources = new ResourceReader(cultureResourceStream))
                     {
-#endif
                         foreach (DictionaryEntry entry in resources)
                         {
                             var resourceName = (string)entry.Key;
+                            resourceNames.Add(resourceName);
                         }
-#if !DNX451
                     }
-#endif
                 }
                 catch (MissingManifestResourceException) { }
 
@@ -150,11 +134,7 @@ namespace Microsoft.Framework.Localization
                 currentCulture = currentCulture.Parent;
             }
 
-            foreach (var name in resourceNames)
-            {
-                var value = GetStringSafely(name, culture);
-                yield return new LocalizedString(name, value ?? name, resourceNotFound: value == null);
-            }
+            return resourceNames;
         }
 
         private class MissingManifestCacheKey : IEquatable<MissingManifestCacheKey>

@@ -1,9 +1,5 @@
 ﻿{
-  "sources": [
-    "src",
-    "test",
-     "wrap"
-  ],
+  "sources": [ "src", "test" ],
   "sdk": {
     "version": "default"
   }
